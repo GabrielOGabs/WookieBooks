@@ -10,7 +10,13 @@ namespace Models.WookieBooks
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string FullName { get; set; }
+
+        [Required]
+        public string Login { get; set; }
+
+        [Required]
+        public string Password { get; set; }
 
         public List<Book> OwnedBooks { get; set; }
 

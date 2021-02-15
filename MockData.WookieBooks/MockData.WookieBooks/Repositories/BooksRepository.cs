@@ -28,5 +28,25 @@ namespace MockData.WookieBooks.Repositories
                 .Include(b => b.CreatedBy)
                 .ToList();
         }
+
+        public bool CheckIfExists(string title, int? updatingId = null)
+        {
+            if (updatingId.HasValue)
+            {
+                return Context.Books
+                    .Any(b => b.Title == title && b.Id != updatingId.Value);
+            }
+            else
+            {
+                return Context.Books
+                    .Any(b => b.Title == title);
+            }
+        }
+
+        public bool CheckIfIdExists(int id)
+        {
+            return Context.Books
+                .Any(b => b.Id == id);
+        }
     }
 }

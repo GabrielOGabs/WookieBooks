@@ -7,16 +7,23 @@ namespace Services.WookieBooks.Mappers
     {
         static public ListBookDto MapListBookDtoFromBook(Book book)
         {
-            return new ListBookDto()
+            if (book != null)
             {
-                Author = book.Author,
-                CoverImage = book.CoverImage,
-                CreatedBy = book.CreatedBy.Name,
-                Description = book.Description,
-                Id = book.Id,
-                Price = book.Price,
-                Title = book.Title
-            };
+                return new ListBookDto()
+                {
+                    Author = book.Author,
+                    CoverImage = book.CoverImage,
+                    CreatedBy = book.CreatedBy.FullName,
+                    Description = book.Description,
+                    Id = book.Id,
+                    Price = book.Price,
+                    Title = book.Title
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

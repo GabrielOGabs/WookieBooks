@@ -17,7 +17,9 @@ namespace MockData.WookieBooks
                 var user = new User
                 {
                     Id = 1,
-                    Name = "Gabriel de Paula santos"
+                    FullName = "API Administrator",
+                    Login = "admin",
+                    Password = "Welcome#123"
                 };
 
                 context.Users.Add(user);

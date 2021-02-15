@@ -21,6 +21,16 @@ namespace Services.WookieBooks
             _usersRepository = new UsersRepository(db);
         }
 
+        public bool CheckIfExists(string title, int? updatingId = null)
+        {
+            return _booksRepository.CheckIfExists(title, updatingId);
+        }
+
+        public bool CheckIfIdExists(int id)
+        {
+            return _booksRepository.CheckIfIdExists(id);
+        }
+
         public int Create(CreateBookDto dto)
         {
             var user = _usersRepository.Get(dto.UserId);
@@ -48,7 +58,6 @@ namespace Services.WookieBooks
         public ListBookDto Get(int id)
         {
             var book = _booksRepository.Get(id);
-
             return BookMapper.MapListBookDtoFromBook(book);
         }
 
@@ -56,7 +65,7 @@ namespace Services.WookieBooks
         {
             return _booksRepository
                 .GetAll()
-                .Select(x => BookMapper.MapListBookDtoFromBook(x))
+                .Select(b => BookMapper.MapListBookDtoFromBook(b))
                 .ToList();
         }
 
@@ -72,7 +81,5 @@ namespace Services.WookieBooks
 
             return _booksRepository.Update(book);
         }
-
-        
     }
 }
