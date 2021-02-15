@@ -6,10 +6,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Services.WookieBooks;
+using Microsoft.EntityFrameworkCore;
+using Services.WookieBooks.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MockData.WookieBooks;
 
 namespace Api.WookieBooks
 {
@@ -25,6 +29,10 @@ namespace Api.WookieBooks
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("WookieBooks"));
+
+            services.AddScoped<IBooksService, BooksService>();
+
             services.AddControllers();
         }
 
@@ -34,6 +42,11 @@ namespace Api.WookieBooks
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                MockDataInitializer.Initialize(serviceScope.ServiceProvider);
             }
 
             app.UseHttpsRedirection();

@@ -4,5 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MockData.WookieBooks\MockData.WookieBooks\MockData.WookieBooks.csproj" />
+    <ProjectReference Include="..\..\Models.WookieBooks\Models.WookieBooks\Models.WookieBooks.csproj" />
+    <ProjectReference Include="..\..\Services.WookieBooks\Services.WookieBooks\Services.WookieBooks.csproj" />
+  </ItemGroup>
+
 
 </Project>
