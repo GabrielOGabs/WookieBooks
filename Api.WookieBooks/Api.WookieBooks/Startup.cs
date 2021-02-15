@@ -14,6 +14,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MockData.WookieBooks;
+using System.Reflection;
+using System.IO;
+using Microsoft.OpenApi.Models;
 
 namespace Api.WookieBooks
 {
@@ -33,6 +36,31 @@ namespace Api.WookieBooks
 
             services.AddScoped<IBooksService, BooksService>();
 
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("WookieBooksAPISpec", 
+                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Title = "Wookie Books API",
+                        Version = "1",
+                        Description = "Test API for Savvyy.ai position of Backend engineer.",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Gabriel de Paula Santos",
+                            Email = "gabriel.santos@outlook.com"
+                        },
+                        License = new OpenApiLicense
+                        {
+                            Name = "MIT License",
+                            Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
+                        }
+                    });
+
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlFullPath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
+                options.IncludeXmlComments(xmlFullPath);
+            });
+
             services.AddControllers();
         }
 
@@ -50,6 +78,14 @@ namespace Api.WookieBooks
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/WookieBooksAPISpec/swagger.json", "Wookie Books API");
+                options.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 

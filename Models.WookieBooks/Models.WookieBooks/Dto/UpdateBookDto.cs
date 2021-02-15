@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Models.WookieBooks.Dto
 {
     public class UpdateBookDto
     {
+        [Required]
         public int Id { get; set; }
 
         public string Title { get; set; }
