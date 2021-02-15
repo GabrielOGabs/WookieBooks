@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\MockData.WookieBooks\MockData.WookieBooks\MockData.WookieBooks.csproj" />
+    <ProjectReference Include="..\..\Models.WookieBooks\Models.WookieBooks\Models.WookieBooks.csproj" />
+  </ItemGroup>
+
 </Project>
