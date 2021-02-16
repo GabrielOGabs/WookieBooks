@@ -16,13 +16,13 @@ namespace Api.WookieBooks.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
 
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<UsersController> _logger;
         
-        public UserController(ILogger<UserController> logger, IUsersService usersService)
+        public UsersController(ILogger<UsersController> logger, IUsersService usersService)
         {
             _logger = logger;
             _usersService = usersService;
@@ -80,7 +80,7 @@ namespace Api.WookieBooks.Controllers
 
             if (_usersService.CheckIfExists(dto.Login))
             {
-                ModelState.AddModelError(string.Empty, "There is already a user with this title on the database!");
+                ModelState.AddModelError(string.Empty, "There is already a user with this login on the database!");
                 return StatusCode(404, ModelState);
             }
 
@@ -111,6 +111,7 @@ namespace Api.WookieBooks.Controllers
         {
             if (dto == null || !ModelState.IsValid || id != dto.Id)
             {
+                ModelState.AddModelError("Not Allowed", "The ids on route and body don't match");
                 return BadRequest(ModelState);
             }
 
@@ -148,13 +149,19 @@ namespace Api.WookieBooks.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(int id)
         {
-            if (!_usersService.CheckIfIdExists(id))
-            {
-                return NotFound();
-            }
-
             try
             {
+                if (id == 1)
+                {
+                    ModelState.AddModelError("Not Allowed", "The admin user can't be deleted");
+                    return BadRequest(ModelState);
+                }
+
+                if (!_usersService.CheckIfIdExists(id))
+                {
+                    return NotFound();
+                }
+            
                 _usersService.Delete(id);
                 return Ok();
             }

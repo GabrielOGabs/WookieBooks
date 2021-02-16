@@ -46,27 +46,27 @@
             <param name="id">The id of the book to be deleted</param>
             <returns></returns>
         </member>
-        <member name="M:Api.WookieBooks.Controllers.UserController.Get">
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Get">
             <summary>
             Get all users
             </summary>
             <returns>Get a collection of all registered users.</returns>
         </member>
-        <member name="M:Api.WookieBooks.Controllers.UserController.Get(System.Int32)">
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Get(System.Int32)">
             <summary>
             Get a specific user.
             </summary>
             <param name="id">The ID of the user</param>
             <returns>A single user with its registered information.</returns>
         </member>
-        <member name="M:Api.WookieBooks.Controllers.UserController.Post(Models.WookieBooks.Dto.CreateUserDto)">
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Post(Models.WookieBooks.Dto.CreateUserDto)">
             <summary>
             Creates a new user
             </summary>
             <param name="dto">The model representing this new user</param>
             <returns></returns>
         </member>
-        <member name="M:Api.WookieBooks.Controllers.UserController.Patch(System.Int32,Models.WookieBooks.Dto.UpdateUserDto)">
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Patch(System.Int32,Models.WookieBooks.Dto.UpdateUserDto)">
             <summary>
             Update a user
             </summary>
@@ -74,7 +74,7 @@
             <param name="dto">The model representing the user to be updated</param>
             <returns></returns>
         </member>
-        <member name="M:Api.WookieBooks.Controllers.UserController.Delete(System.Int32)">
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Delete(System.Int32)">
             <summary>
             Deletes a user
             </summary>

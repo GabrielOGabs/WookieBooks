@@ -34,7 +34,7 @@ namespace MockData.WookieBooks
                 {
                     FullName = "Stephen Hawking Enthusiast",
                     Login = "s.hawking",
-                    Password = "HP#123"
+                    Password = "SH#123"
                 };
 
                 context.Users.Add(adminUser);
