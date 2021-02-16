@@ -29,6 +29,13 @@ namespace MockData.WookieBooks.Repositories
                 .ToList();
         }
 
+        public User GetByLoginAndPassword(string login, string password)
+        {
+            return Context.Users
+                .Where(u => u.Login == login && u.Password == password)
+                .SingleOrDefault();
+        }
+
         public bool CheckIfExists(string login, int? updatingId)
         {
             if (updatingId.HasValue)

@@ -20,10 +20,23 @@ namespace Services.WookieBooks.Mappers
                         .ToList()
                 };
             }
-            else
+            
+            return null;
+        }
+
+        static public AuthorizedUserDto MapAuthorizedUserDtoFromUser(User user)
+        {
+            if (user != null)
             {
-                return null;
+                return new AuthorizedUserDto
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    FullName = user.FullName
+                };
             }
+            
+            return null;
         }
     }
 }
