@@ -68,9 +68,9 @@ namespace Api.WookieBooks.Controllers
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ModelStateDictionary))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Post([FromBody] CreateBookDto dto)
         {
             if(dto == null || !ModelState.IsValid)
@@ -103,11 +103,10 @@ namespace Api.WookieBooks.Controllers
         /// <param name="dto">The model representing the book to be updated</param>
         /// <returns></returns>
         [HttpPatch("{id:int}", Name = "Patch")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ModelStateDictionary))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Patch(int id, [FromBody] UpdateBookDto dto)
         {
             if (dto == null || !ModelState.IsValid || id != dto.Id)
@@ -144,10 +143,9 @@ namespace Api.WookieBooks.Controllers
         /// <param name="id">The id of the book to be deleted</param>
         /// <returns></returns>
         [HttpDelete("{id:int}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ModelStateDictionary))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(int id)
         {
             if(!_booksService.CheckIfIdExists(id))
