@@ -1,13 +1,12 @@
-﻿using Models.WookieBooks.Interfaces;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace Models.WookieBooks
+namespace Models.WookieBooks.Dto
 {
-    public class User : IAppEntity
+    public class CreateUserDto
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -18,12 +17,5 @@ namespace Models.WookieBooks
 
         [Required]
         public string Password { get; set; }
-
-        public List<Book> OwnedBooks { get; set; }
-
-        public User()
-        {
-            OwnedBooks = new List<Book>();
-        }
     }
 }

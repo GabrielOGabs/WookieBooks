@@ -17,6 +17,9 @@ using MockData.WookieBooks;
 using System.Reflection;
 using System.IO;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Api.WookieBooks
 {
@@ -35,6 +38,32 @@ namespace Api.WookieBooks
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("WookieBooks"));
 
             services.AddScoped<IBooksService, BooksService>();
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IAuthService, AuthService>();
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var ssKeySecret = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(ssKeySecret),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
             services.AddSwaggerGen(options =>
             {
@@ -88,6 +117,16 @@ namespace Api.WookieBooks
             });
 
             app.UseRouting();
+
+            app.UseCors(options =>
+            {
+                options
+                  .AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+            });
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
