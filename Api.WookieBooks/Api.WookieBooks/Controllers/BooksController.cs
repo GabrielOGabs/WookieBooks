@@ -14,6 +14,7 @@ namespace Api.WookieBooks.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IBooksService _booksService;
@@ -31,6 +32,7 @@ namespace Api.WookieBooks.Controllers
         /// </summary>
         /// <returns>Get a collection of all registered books.</returns>
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ListBookDto>))]
         public IActionResult Get()
         {
@@ -44,6 +46,7 @@ namespace Api.WookieBooks.Controllers
         /// <param name="id">The ID of the book</param>
         /// <returns>A single book with its registered information.</returns>
         [HttpGet("{id:int}", Name = "GetBook")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListBookDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get(int id)
@@ -64,7 +67,6 @@ namespace Api.WookieBooks.Controllers
         /// <param name="dto">The model representing this new book</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ModelStateDictionary))]

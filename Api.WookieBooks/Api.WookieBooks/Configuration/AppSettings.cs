@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.WookieBooks
+namespace Api.WookieBooks.Configuration
 {
     public class AppSettings
     {

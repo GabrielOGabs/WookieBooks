@@ -1,4 +1,5 @@
-﻿using Api.WookieBooks.Helpers;
+﻿using Api.WookieBooks.Configuration;
+using Api.WookieBooks.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace Api.WookieBooks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AuthorizedUserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Post(LoginAttemptDto dto)
+        public IActionResult Post([FromBody] LoginAttemptDto dto)
         {
             if(dto == null)
             {

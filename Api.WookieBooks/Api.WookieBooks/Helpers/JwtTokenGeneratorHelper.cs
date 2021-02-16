@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Api.WookieBooks.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Models.WookieBooks.Dto;
 using System;
 using System.IdentityModel.Tokens.Jwt;
