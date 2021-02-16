@@ -36,6 +36,12 @@ namespace MockData.WookieBooks.Repositories
                 .SingleOrDefault();
         }
 
+        public bool CheckIfIdExists(int id)
+        {
+            return Context.Users
+                .Any(b => b.Id == id);
+        }
+
         public bool CheckIfExists(string login, int? updatingId)
         {
             if (updatingId.HasValue)

@@ -20,6 +20,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Api.WookieBooks.Configuration;
 
 namespace Api.WookieBooks
 {
@@ -47,6 +48,8 @@ namespace Api.WookieBooks
             var appSettings = appSettingsSection.Get<AppSettings>();
             var ssKeySecret = Encoding.ASCII.GetBytes(appSettings.Secret);
 
+            services.AddCors();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -68,7 +71,7 @@ namespace Api.WookieBooks
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("WookieBooksAPISpec", 
-                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    new OpenApiInfo
                     {
                         Title = "Wookie Books API",
                         Version = "1",
@@ -84,6 +87,39 @@ namespace Api.WookieBooks
                             Url = new Uri("https://en.wikipedia.org/wiki/MIT_License")
                         }
                     });
+
+                var sbPlaceHolder = new StringBuilder();
+                sbPlaceHolder.AppendLine("JWT Authorization header using Bearer token.");
+                sbPlaceHolder.AppendLine("");
+                sbPlaceHolder.AppendLine("Enter 'Bearer' [space] and then the JWT token in the text input bellow");
+                sbPlaceHolder.AppendLine("");
+                sbPlaceHolder.AppendLine("Example: \"Bearer\" ");
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = sbPlaceHolder.ToString(),
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                });
 
                 var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlFullPath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
