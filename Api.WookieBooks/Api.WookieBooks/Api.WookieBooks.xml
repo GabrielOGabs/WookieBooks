@@ -4,6 +4,13 @@
         <name>Api.WookieBooks</name>
     </assembly>
     <members>
+        <member name="M:Api.WookieBooks.Controllers.AuthController.Get(System.Int32)">
+            <summary>
+            Get a specific user.
+            </summary>
+            <param name="id">The ID of the user</param>
+            <returns>A single user with its registered information.</returns>
+        </member>
         <member name="M:Api.WookieBooks.Controllers.BooksController.Get">
             <summary>
             Get all books

@@ -1,6 +1,7 @@
 ﻿using Models.WookieBooks.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models.WookieBooks
 {
@@ -17,6 +18,9 @@ namespace Models.WookieBooks
 
         [Required]
         public string Password { get; set; }
+
+        [NotMapped]
+        public string AuthToken { get; set; }
 
         public List<Book> OwnedBooks { get; set; }
 

@@ -35,6 +35,7 @@ namespace Api.WookieBooks
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("WookieBooks"));
 
             services.AddScoped<IBooksService, BooksService>();
+            services.AddScoped<IUsersService, UsersService>();
 
             services.AddSwaggerGen(options =>
             {

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Models.WookieBooks.Dto;
@@ -29,7 +31,7 @@ namespace Api.WookieBooks.Controllers
         /// </summary>
         /// <returns>Get a collection of all registered books.</returns>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(List<ListBookDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ListBookDto>))]
         public IActionResult Get()
         {
             var bookList = _booksService.GetAll();
@@ -41,9 +43,9 @@ namespace Api.WookieBooks.Controllers
         /// </summary>
         /// <param name="id">The ID of the book</param>
         /// <returns>A single book with its registered information.</returns>
-        [HttpGet("{id:int}", Name = "Get")]
-        [ProducesResponseType(200, Type = typeof(ListBookDto))]
-        [ProducesResponseType(404)]
+        [HttpGet("{id:int}", Name = "GetBook")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListBookDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get(int id)
         {
             var book = _booksService.Get(id);
@@ -62,10 +64,11 @@ namespace Api.WookieBooks.Controllers
         /// <param name="dto">The model representing this new book</param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(404, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(500, Type = typeof(ModelStateDictionary))]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ModelStateDictionary))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ModelStateDictionary))]
         public IActionResult Post([FromBody] CreateBookDto dto)
         {
             if(dto == null || !ModelState.IsValid)
@@ -98,10 +101,11 @@ namespace Api.WookieBooks.Controllers
         /// <param name="dto">The model representing the book to be updated</param>
         /// <returns></returns>
         [HttpPatch("{id:int}", Name = "Patch")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(404, Type = typeof(ModelStateDictionary))]
-        [ProducesResponseType(500, Type = typeof(ModelStateDictionary))]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ModelStateDictionary))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ModelStateDictionary))]
         public IActionResult Patch(int id, [FromBody] UpdateBookDto dto)
         {
             if (dto == null || !ModelState.IsValid || id != dto.Id)
@@ -138,9 +142,10 @@ namespace Api.WookieBooks.Controllers
         /// <param name="id">The id of the book to be deleted</param>
         /// <returns></returns>
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500, Type = typeof(ModelStateDictionary))]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ModelStateDictionary))]
         public IActionResult Delete(int id)
         {
             if(!_booksService.CheckIfIdExists(id))

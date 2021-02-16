@@ -29,16 +29,16 @@ namespace Services.WookieBooks.Interfaces
         /// <summary>
         /// Update information from a book and save it into the repository
         /// </summary>
-        /// <param name="book"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
-        int Update(UpdateBookDto book);
+        int Update(UpdateBookDto dto);
 
         /// <summary>
         /// Creates a new Book and add it to the repository
         /// </summary>
-        /// <param name="book"></param>
+        /// <param name="dto"></param>
         /// <returns>The Id from the recently added book</returns>
-        int Create(CreateBookDto book);
+        int Create(CreateBookDto dto);
 
         /// <summary>
         /// Check if the book already exists int the Datatable
