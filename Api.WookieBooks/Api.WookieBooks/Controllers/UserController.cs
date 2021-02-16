@@ -14,6 +14,7 @@ namespace Api.WookieBooks.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUsersService _usersService;

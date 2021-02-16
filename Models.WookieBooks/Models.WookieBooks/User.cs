@@ -19,9 +19,6 @@ namespace Models.WookieBooks
         [Required]
         public string Password { get; set; }
 
-        [NotMapped]
-        public string AuthToken { get; set; }
-
         public List<Book> OwnedBooks { get; set; }
 
         public User()

@@ -11,5 +11,7 @@ namespace Models.WookieBooks.Dto
         public string Login { get; set; }
 
         public string FullName { get; set; }
+
+        public string AuthToken { get; set; }
     }
 }
