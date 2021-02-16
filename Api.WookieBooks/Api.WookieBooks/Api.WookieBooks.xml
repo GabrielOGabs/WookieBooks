@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Api.WookieBooks</name>
+    </assembly>
+    <members>
+        <member name="M:Api.WookieBooks.Controllers.AuthController.Post(Models.WookieBooks.Dto.LoginAttemptDto)">
+            <summary>
+            Authorizes an user to access all other locked endpoints using login and password
+            </summary>
+            <param name="dto">Login and Password information to authorize.</param>
+            <returns>A logged user information with a JWT Bearer Token</returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.BooksController.Get">
+            <summary>
+            Get all books
+            </summary>
+            <returns>Get a collection of all registered books.</returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.BooksController.Get(System.Int32)">
+            <summary>
+            Get a specific book.
+            </summary>
+            <param name="id">The ID of the book</param>
+            <returns>A single book with its registered information.</returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.BooksController.Post(Models.WookieBooks.Dto.CreateBookDto)">
+            <summary>
+            Creates a new book
+            </summary>
+            <param name="dto">The model representing this new book</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.BooksController.Patch(System.Int32,Models.WookieBooks.Dto.UpdateBookDto)">
+            <summary>
+            Update a book
+            </summary>
+            <param name="id">The id of the book to be updated</param>
+            <param name="dto">The model representing the book to be updated</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.BooksController.Delete(System.Int32)">
+            <summary>
+            Deletes a book
+            </summary>
+            <param name="id">The id of the book to be deleted</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Get">
+            <summary>
+            Get all users
+            </summary>
+            <returns>Get a collection of all registered users.</returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Get(System.Int32)">
+            <summary>
+            Get a specific user.
+            </summary>
+            <param name="id">The ID of the user</param>
+            <returns>A single user with its registered information.</returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Post(Models.WookieBooks.Dto.CreateUserDto)">
+            <summary>
+            Creates a new user
+            </summary>
+            <param name="dto">The model representing this new user</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Patch(System.Int32,Models.WookieBooks.Dto.UpdateUserDto)">
+            <summary>
+            Update a user
+            </summary>
+            <param name="id">The id of the user to be updated</param>
+            <param name="dto">The model representing the user to be updated</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.WookieBooks.Controllers.UsersController.Delete(System.Int32)">
+            <summary>
+            Deletes a user
+            </summary>
+            <param name="id">The id of the user to be deleted</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
