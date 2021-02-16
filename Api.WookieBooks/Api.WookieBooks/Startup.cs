@@ -48,6 +48,8 @@ namespace Api.WookieBooks
             var appSettings = appSettingsSection.Get<AppSettings>();
             var ssKeySecret = Encoding.ASCII.GetBytes(appSettings.Secret);
 
+            services.AddCors();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

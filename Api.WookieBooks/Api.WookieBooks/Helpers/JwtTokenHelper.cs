@@ -2,17 +2,19 @@
 using Microsoft.IdentityModel.Tokens;
 using Models.WookieBooks.Dto;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Linq;
 
 namespace Api.WookieBooks.Helpers
 {
-    public class JwtTokenGeneratorHelper
+    public class JwtTokenHelper
     {
         private readonly AppSettings _appSettings;
 
-        public JwtTokenGeneratorHelper(AppSettings appSettings)
+        public JwtTokenHelper(AppSettings appSettings)
         {
             _appSettings = appSettings;
         }
@@ -38,6 +40,17 @@ namespace Api.WookieBooks.Helpers
 
             var authorizationToken = tokenHandler.CreateToken(tokenDescriptor);
             authorizedUser.AuthToken = tokenHandler.WriteToken(authorizationToken);
+        }
+
+        public int GetUserIdFromClaims(ClaimsIdentity claimsIdentity)
+        {
+            var userId = claimsIdentity
+                .Claims
+                .Where(c => c.Type == ClaimTypes.NameIdentifier)
+                .Select(c => c.Value)
+                .Single();
+
+            return Convert.ToInt32(userId);
         }
     }
 }

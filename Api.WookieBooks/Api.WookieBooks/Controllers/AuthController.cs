@@ -1,21 +1,12 @@
 ﻿using Api.WookieBooks.Configuration;
 using Api.WookieBooks.Helpers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Models.WookieBooks.Dto;
 using Services.WookieBooks.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.WookieBooks.Controllers
 {
@@ -34,6 +25,11 @@ namespace Api.WookieBooks.Controllers
             _appSettings = appSettings.Value;
         }
 
+        /// <summary>
+        /// Authorizes an user to access all other locked endpoints using login and password
+        /// </summary>
+        /// <param name="dto">Login and Password information to authorize.</param>
+        /// <returns>A logged user information with a JWT Bearer Token</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AuthorizedUserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,7 +50,7 @@ namespace Api.WookieBooks.Controllers
                 return NotFound(ModelState);
             }
 
-            var tokenGenerator = new JwtTokenGeneratorHelper(_appSettings);
+            var tokenGenerator = new JwtTokenHelper(_appSettings);
             tokenGenerator.GenerateToken(authorizedUser);
 
             return Ok(authorizedUser);

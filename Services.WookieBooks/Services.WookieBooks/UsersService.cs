@@ -24,6 +24,11 @@ namespace Services.WookieBooks
             return _usersRepository.CheckIfExists(login, updatingId);
         }
 
+        public bool CheckIfIdExists(int id)
+        {
+            return _usersRepository.CheckIfIdExists(id);
+        }
+
         public int Create(CreateUserDto dto)
         {
             var user = new User()
@@ -47,6 +52,11 @@ namespace Services.WookieBooks
         {
             var user = _usersRepository.Get(id);
             return UserMapper.MapListUserDtoFromUser(user);
+        }
+
+        public List<ListUserDto> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public int Update(UpdateUserDto dto)

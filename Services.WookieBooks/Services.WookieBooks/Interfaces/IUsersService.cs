@@ -7,6 +7,12 @@ namespace Services.WookieBooks.Interfaces
     public interface IUsersService
     {
         /// <summary>
+        /// Get a list of Users from the repository
+        /// </summary>
+        /// <returns>A list of Dtos containing listing information for users</returns>
+        List<ListUserDto> GetAll();
+
+        /// <summary>
         /// Get a single User from the repository
         /// </summary>
         /// <param name="id">Id number of the user</param>
@@ -41,5 +47,12 @@ namespace Services.WookieBooks.Interfaces
         /// <param name="updatingId">The id from the user that is being updated</param>
         /// <returns>true if already exists</returns>
         bool CheckIfExists(string login, int? updatingId = null);
+
+        /// <summary>
+        /// Check if there is an user with given Id
+        /// </summary>
+        /// <param name="id">The id of the user</param>
+        /// <returns>true if already exists</returns>
+        bool CheckIfIdExists(int id);
     }
 }

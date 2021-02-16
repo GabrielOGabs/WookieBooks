@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Api.WookieBooks.Configuration;
+using Api.WookieBooks.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Models.WookieBooks.Dto;
 using Services.WookieBooks.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Api.WookieBooks.Controllers
@@ -18,13 +22,15 @@ namespace Api.WookieBooks.Controllers
     public class BooksController : ControllerBase
     {
         private readonly IBooksService _booksService;
+        private readonly AppSettings _appSettings;
 
         private readonly ILogger<BooksController> _logger;
         
-        public BooksController(ILogger<BooksController> logger, IBooksService booksService)
+        public BooksController(ILogger<BooksController> logger, IBooksService booksService, IOptions<AppSettings> appSettings)
         {
             _logger = logger;
             _booksService = booksService;
+            _appSettings = appSettings.Value;
         }
 
         /// <summary>
@@ -45,7 +51,7 @@ namespace Api.WookieBooks.Controllers
         /// </summary>
         /// <param name="id">The ID of the book</param>
         /// <returns>A single book with its registered information.</returns>
-        [HttpGet("{id:int}", Name = "GetBook")]
+        [HttpGet("{id:int}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListBookDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,7 +79,12 @@ namespace Api.WookieBooks.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Post([FromBody] CreateBookDto dto)
         {
-            if(dto == null || !ModelState.IsValid)
+            var jwtHelper = new JwtTokenHelper(_appSettings);
+            var currUserClaims = HttpContext.User.Identity as ClaimsIdentity;
+
+            dto.UserId = jwtHelper.GetUserIdFromClaims(currUserClaims);
+
+            if (dto == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -102,7 +113,7 @@ namespace Api.WookieBooks.Controllers
         /// <param name="id">The id of the book to be updated</param>
         /// <param name="dto">The model representing the book to be updated</param>
         /// <returns></returns>
-        [HttpPatch("{id:int}", Name = "Patch")]
+        [HttpPatch("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
